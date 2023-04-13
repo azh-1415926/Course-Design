@@ -7,6 +7,7 @@ void initalBookcase(){
     bookcase->type="NULL";
     bookcase->id=0;
     bookcase->books=(struct book*)malloc(sizeof(struct book));
+    bookcase->books->next=NULL;
     bookcase->next=NULL;
 }
 void addBookcase(const char* type){
@@ -49,11 +50,11 @@ void removeBookcase(const char* type){
     free(pBookcase->next);
 }
 static void showBook(struct book* pBook){
-    printf("Book id:  %d",pBook->id);
-    printf(",Book name:  %s",pBook->name);
-    printf(",Book total count:  %d",pBook->totalCount);
-    printf(",Book current count:  %d",pBook->curCount);
-    printf(",Book price:  %d",pBook->price);
+    printf("[*] Book id:  %d\n",pBook->id);
+    printf("    Name:  %s",pBook->name);
+    printf("\tTotal count:  %d\n",pBook->totalCount);
+    printf("    Current count:  %d",pBook->curCount);
+    printf("\tPrice:  %d\n",pBook->price);
 }
 void showAllBooks(){
     struct bookcase* pBookcase=bookcase;

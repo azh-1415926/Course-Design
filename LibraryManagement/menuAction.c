@@ -29,11 +29,11 @@ void addBook(){
     struct book* pBook=(struct book*)malloc(sizeof(struct book));
     for(int i=0;i<count;i++){
         printf("This is the %d book!\n",i+1);
-        pBook->id=i+1;
+        pBook[i].id=i+1;
         getInfo("Book Name","What is the book's name?",&pBook[i].name,sizeof(pBook->name),ELE_STRING);
         getInfo("Book Author","What is the book's author?",&pBook[i].author,sizeof(pBook->author),ELE_STRING);
         getInfo("Book Total","What is the book's total count?",&pBook[i].totalCount,0,ELE_INT);
-        getInfo("Book Price","What is the book's total count?",&pBook[i].totalCount,0,ELE_INT);
+        getInfo("Book Price","What is the book's price?",&pBook[i].price,0,ELE_INT);
         pBook[i].curCount=pBook[i].totalCount;
         if(i!=count-1)
             pBook[i].next=&pBook[i+1];
@@ -51,5 +51,6 @@ void removeBook(){
 }
 void exitMenu(){
     printf("exit!\n");
+    freeBookcase();
     exit(0);
 }

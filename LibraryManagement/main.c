@@ -32,9 +32,11 @@ int main(){
             if(nextMenu->flag==PRE_LEVEL_MENU)
                 nextMenu=nextMenu->next;
             else
-                nextMenu=NULL;
+                //nextMenu=NULL;
+                nextMenu=item;
         }     
     }
-    showMenuItems(item,sizeof(item)/sizeof(struct menuItem));
+    freeBookcase();
+    //showMenuItems(item,sizeof(item)/sizeof(struct menuItem));
     return 0;
 }
