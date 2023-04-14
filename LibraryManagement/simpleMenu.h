@@ -15,7 +15,7 @@ struct menuItem {
     struct menuItem* brother;
     struct menuItem* next;
 };
-void initalMenu(struct menuItem* menu,int n);
+void initalMenu(struct menuItem* menu,int size);
 int showBrotherMenu(struct menuItem* menu);
 int getOption(int minnum,int maxnum);
 struct menuItem* jumpNextMenu(struct menuItem* menu,int pos);
