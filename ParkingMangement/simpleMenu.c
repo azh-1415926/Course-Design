@@ -78,18 +78,16 @@ int showBrotherMenu(struct menuItem* menu){
 int getOption(int minnum,int maxnum){
     if(maxnum<minnum)
         return 0;
-    char option;
+    int option;
     printf("Please enter:");
-    fflush(stdin);
-    scanf("%c",&option);
-    while(option<minnum+48||option>maxnum+48){
-        fflush(stdin); 
+    scanf("%d",&option);
+    while(option<minnum||option>maxnum){
+        scanf("%*s");
         printf("error!Please enter incorrect option!\nenter:");
-        scanf("%c",&option);
-        fflush(stdin);
+        scanf("%d",&option);
     }
-    return option-49;
-}
+    return option-1;
+}	
 struct menuItem* jumpNextMenu(struct menuItem* menu,int pos){
     struct menuItem* curMenu=menu;
     int i=0;
