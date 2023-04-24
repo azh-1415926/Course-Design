@@ -67,22 +67,31 @@ void removeCars(){
     struct car* pCar=NULL;
     for(int i=0;i<count;i++){
         pCar=removeCar();
-        showCar(pCar);
-        showBill(pCar);
-        if(pCar)
+        if(pCar){
+            showCar(pCar);
+            showBill(pCar);
             free(pCar);
+        } 
     }
 }
 void clearAllCars(){
     struct car* pCar=NULL;
-    while((pCar=removeCar()))
+    while((pCar=removeCar())){
+        showCar(pCar);
+        showBill(pCar);
         free(pCar);
+    }   
     printf("Clear all the cars!\n");
 }
 void exitMenu(){
     struct car* pCar=NULL;
-    while((pCar=removeCar()))
+    while((pCar=removeCar())){
+        showCar(pCar);
+        showBill(pCar);
         free(pCar);
+    }
+    freeSidewalk();
+    freeParkingLot(); 
     printf("Exit!\n");
     exit(0);
 }

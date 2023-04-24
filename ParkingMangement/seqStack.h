@@ -2,17 +2,16 @@
 #define _SEQ_STACK_H_
 #include<stdio.h>
 #include<stdbool.h>
-typedef struct car* Type;
 typedef struct seqStack {
     int top;
-    Type* bottom;
+    void** bottom;
     int capacity;
 }*seqStack;
 void seqStackInitalize(seqStack* ppStack,int capacity);
-bool seqStackIsEmpty(seqStack stack);
-bool seqStackIsFull(seqStack stack);
-void seqStackPush(seqStack stack,Type data);
-Type seqStackTop(seqStack stack);
-void seqStackPop(seqStack stack);
 void seqStackFree(seqStack* stack);
+bool seqStackIsEmpty(seqStack const stack);
+bool seqStackIsFull(seqStack const stack);
+void seqStackPush(seqStack stack,void* const data);
+void* seqStackTop(seqStack const stack);
+void seqStackPop(seqStack stack);
 #endif

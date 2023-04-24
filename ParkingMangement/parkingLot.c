@@ -88,9 +88,7 @@ struct car* removeCar(){
     if(!seqQueueIsEmpty(sidewalk)){
         pTemp=seqQueueFront(sidewalk);
         seqQueueDequeue(sidewalk);
-        if(!parking(pTemp)){
-            waiting(pTemp);
-        }
+        parking(pTemp);
     }
     return pCar;
 }
