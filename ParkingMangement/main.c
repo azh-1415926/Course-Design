@@ -12,11 +12,11 @@ int main(){
     };
     initalMenu(item,sizeof(item)/sizeof(struct menuItem));
     initalSidewalk(10);
-    initalParkingLot(5,2.5);
+    initalParkingLot(5);
     int num,option;
     struct menuItem* nextMenu=item;
     while(nextMenu){
-        printf("---Menu---\n");
+        printf("---------------Menu---------------\n");
         num=showBrotherMenu(nextMenu);
         option=getOption(1,num);
         nextMenu=jumpNextMenu(nextMenu,option);
