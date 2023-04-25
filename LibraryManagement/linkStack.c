@@ -2,33 +2,9 @@
 #include<stdlib.h>
 void linkStackInitalize(linkStack* ppStack){
     *ppStack=(linkStack)malloc(sizeof(struct linkStack));
-    (*ppStack)->top=NULL;
-    (*ppStack)->bottom=NULL;
-}
-bool linkStackIsEmpty(linkStack stack){
-    return stack->top==NULL;
-}
-void linkStackPush(linkStack stack,Type data){
-    linkStackNode* pStack=stack->top;
-    stack->top=(linkStackNode*)malloc(sizeof(struct linkStackNode));
-    if(stack->bottom==NULL)
-        stack->bottom=stack->top;
-    stack->top->next=pStack;
-    stack->top->data=data;
-}
-Type linkStackTop(linkStack stack){
-    if(stack->top==NULL)
-        return 0;
-    return stack->top->data;
-}
-void linkStackPop(linkStack stack){
-    if(stack->top==NULL)
-        return;
-    linkStackNode* pStack=stack->top;
-    stack->top=pStack->next;
-    free(pStack);
-    if(stack->top==NULL)
-        stack->bottom=stack->top;
+    (*ppStack)->bottom=(linkStackNode*)malloc(sizeof(struct linkStackNode));
+    (*ppStack)->bottom->next=NULL;
+    (*ppStack)->top=(*ppStack)->bottom->next;
 }
 void linkStackFree(linkStack* ppStack){
     linkStackNode* pStack=NULL;
@@ -39,4 +15,25 @@ void linkStackFree(linkStack* ppStack){
     }
     free(*ppStack);
     *ppStack=NULL;
+}
+bool linkStackIsEmpty(linkStack const stack){
+    return stack->top==NULL;
+}
+void linkStackPush(linkStack stack,void* const data){
+    linkStackNode* pStack=stack->top;
+    stack->top=(linkStackNode*)malloc(sizeof(struct linkStackNode));
+    stack->top->next=pStack;
+    stack->top->data=data;
+}
+void* linkStackTop(linkStack const stack){
+    if(stack->top==NULL)
+        return NULL;
+    return stack->top->data;
+}
+void linkStackPop(linkStack stack){
+    if(stack->top==NULL)
+        return;
+    linkStackNode* pStack=stack->top;
+    stack->top=pStack->next;
+    free(pStack);
 }

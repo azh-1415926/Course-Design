@@ -2,9 +2,8 @@
 #define _LINK_STACK_H_
 #include<stdio.h>
 #include<stdbool.h>
-typedef struct menuItem* Type;
 typedef struct linkStackNode {
-    Type data;
+    void* data;
     struct linkStackNode *next;
 }linkStackNode;
 typedef struct linkStack {
@@ -12,9 +11,9 @@ typedef struct linkStack {
     struct linkStackNode *bottom;
 }*linkStack;
 void linkStackInitalize(linkStack* ppStack);
-bool linkStackIsEmpty(linkStack stack);
-void linkStackPush(linkStack stack,Type data);
-Type linkStackTop(linkStack stack);
-void linkStackPop(linkStack stack);
 void linkStackFree(linkStack* ppStack);
+bool linkStackIsEmpty(linkStack const stack);
+void linkStackPush(linkStack stack,void* const data);
+void* linkStackTop(linkStack const stack);
+void linkStackPop(linkStack stack);
 #endif
