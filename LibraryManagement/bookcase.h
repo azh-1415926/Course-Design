@@ -10,20 +10,12 @@ struct book {
     int price;
     struct book* next;
 };
-struct bookcase {
-    const char* type;
-    int id;
-    struct book* books;
-    struct bookcase* next;
-};
 void initalBookcase();
-void addBookcase(const char* type);
-struct bookcase* getBookcaseByType(const char* type);
 void removeBookcase(const char* type);
 //static void showBook(struct book* pBook);
 void showAllBooks();
 void showSomeBooks(const char* type);
-void addBooks(const char* type,struct book* books,int n);
+void addBooks(int *keys,struct book* books,int n);
 void removeBooks();
 void alterBooks();
 void freeBookcase();
