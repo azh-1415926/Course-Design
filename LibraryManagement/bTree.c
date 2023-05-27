@@ -521,6 +521,7 @@ void bTreeFree(BTree *tree)
     */
     if(tree==NULL&&*tree==NULL)
         return;
+    BTNode* currNode=NULL;
     linkStack stack;
     linkStackInitalize(&stack);
     linkStackPush(stack,*tree);
