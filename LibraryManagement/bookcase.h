@@ -1,22 +1,21 @@
 #ifndef _BOOK_CASE_H_
 #define _BOOK_CASE_H_
 #include <stdio.h>
-struct book {
+#include <stdbool.h>
+typedef struct Book {
     int id;
     char name[20];
     char author[20];
     int totalCount;
-    int curCount;
+    int currCount;
     int price;
-    struct book* next;
-};
+}Book;
+
 void initalBookcase();
-void removeBookcase(const char* type);
-//static void showBook(struct book* pBook);
+void freeBookcase(void(freeData)(void*));
+Book* searchBook(int id);
+void showBook(void* data);
 void showAllBooks();
-void showSomeBooks(const char* type);
-void addBooks(int *keys,struct book* books,int n);
-void removeBooks();
-void alterBooks();
-void freeBookcase();
+bool addBook(Book* book);
+Book* removeBook(int id);
 #endif

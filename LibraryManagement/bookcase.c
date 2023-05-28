@@ -1,35 +1,42 @@
 #include "bookcase.h"
+#include "bTree.h"
 #include <stdlib.h>
 #include <string.h>
-static struct bookcase* bookcase=NULL;
+static BTree bookcase=NULL;
+
 void initalBookcase(){
-    //
+    bTreeInitalize(&bookcase);
 }
-void addBookcase(const char* type){
-    //
+
+void freeBookcase(void(freeData)(void*)){
+    if(freeData!=NULL)
+        bTreeTraversal(bookcase,freeData);
+    bTreeFree(&bookcase);
 }
-static void showBook(struct book* pBook){
-    printf("[*] Book id:  %d\n",pBook->id);
-    printf("    Name:  %s",pBook->name);
-    printf("\tTotal count:  %d\n",pBook->totalCount);
-    printf("    Current count:  %d",pBook->curCount);
-    printf("\tPrice:  %d\n",pBook->price);
+
+Book* searchBook(int id){
+    return bTreeSearch(bookcase,id);
 }
+
+void showBook(void* data){
+    if(data==NULL)
+        return;
+    Book* pBook=(Book*)data;
+    printf("[*] Book id: %d",pBook->id);
+    printf("\tName: %s",pBook->name);
+    printf("\tAuthor: %s",pBook->author);
+    printf("\tTotal count: %d",pBook->totalCount);
+    printf("\tCurrent count: %d",pBook->currCount);
+    printf("\tPrice: %d\n",pBook->price);
+}
+
 void showAllBooks(){
-    //
+    bTreeTraversal(bookcase,showBook);
 }
-void showSomeBooks(const char* type){
-    //
-}
-void addBooks(int *keys,struct book* books,int n){
-    
-}
-void removeBooks(){
 
+bool addBook(Book* book){
+    return bTreeInsert(bookcase,book->id,book);
 }
-void alterBooks(){
-
-}
-void freeBookcase(){
-    //
+Book* removeBook(int id){
+    return bTreeDelete(bookcase,id);
 }
