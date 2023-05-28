@@ -68,6 +68,7 @@ void initalMenu(struct menuItem* menu,int size){
 int showBrotherMenu(struct menuItem* menu){
     struct menuItem* curMenu=menu;
     int i=0;
+    printf("-----------LibraryMangement-----------\n");
     while(curMenu!=NULL){
         printf("\t[ %d ]     %s\n",i+1,curMenu->name);
         i++;

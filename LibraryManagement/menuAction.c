@@ -146,7 +146,7 @@ void returnbook()
         showBook(pBook);
         getInfo("Return book","How many books you want to return?",&num,0,ELE_INT);
         while(num>count){
-            getInfo("Return book","return error!Please enter again.\n",&num,0,ELE_INT);
+            getInfo("Return book","return error!Please enter again.",&num,0,ELE_INT);
         }
         pBook->currCount=pBook->currCount+num;
         printf("Return finish.\n");
