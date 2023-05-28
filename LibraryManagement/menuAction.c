@@ -110,6 +110,7 @@ void removebook(){
     if(pBook){
         printf("Remove a book.\n");
         showBook(pBook);
+        free(pBook);
     }else{
         printf("Remove error!No that book.\n");
     }
