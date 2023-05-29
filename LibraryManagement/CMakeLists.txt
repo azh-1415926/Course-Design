@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0)
 set(PROJECT_NAME bookcase)
-set(SRC_LIST bookcase.c debug.c linkstack.c menuAction.c simpleMenu.c main.c bTree.c)
+set(SRC_LIST bookcase.c debug.c linkStack.c menuAction.c simpleMenu.c main.c bTree.c)
 project(${PROJECT_NAME})
 add_executable(${PROJECT_NAME} ${SRC_LIST})

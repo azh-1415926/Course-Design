@@ -1,7 +1,6 @@
 #include "bTree.h"
 #include "linkStack.h"
 #include<stdlib.h>
-#include "debug.h"
 static BTNode* createBTNode(BTNode* parent);
 static int searchIndex(BTNode *node,Key key);
 static BTNode* searchBTNode(BTNode* node,Key key);
