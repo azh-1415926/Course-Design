@@ -10,7 +10,7 @@ void initalBookcase(){
 
 void freeBookcase(void(freeData)(void*)){
     if(freeData!=NULL)
-        bTreeTraversal(bookcase,freeData);
+        bTreeLevelOrderTraversal(bookcase,freeData);
     bTreeFree(&bookcase);
 }
 
@@ -31,7 +31,7 @@ void showBook(void* data){
 }
 
 void showAllBooks(){
-    bTreeTraversal(bookcase,showBook);
+    bTreeInOrderTraversal(bookcase,showBook);
 }
 
 bool addBook(Book* book){

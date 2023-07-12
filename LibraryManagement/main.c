@@ -1,6 +1,5 @@
 #include "simpleMenu.h"
 #include "menuAction.h"
-#include "debug.h"
 #include "bookcase.h"
 int main(){
     struct menuItem item[]={
@@ -38,6 +37,5 @@ int main(){
                 nextMenu=item;
         }     
     }
-    //showMenuItems(item,sizeof(item)/sizeof(struct menuItem));
     return 0;
 }
