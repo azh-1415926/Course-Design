@@ -1,6 +1,8 @@
 #include "bTree.h"
-#include "linkStack.h"
+#include "linkQueue.h"
+//#include "linkStack.h"
 #include<stdlib.h>
+//#include "debug.h"
 static BTNode* createBTNode(BTNode* parent);
 static int searchIndex(BTNode *node,Key key);
 static BTNode* searchBTNode(BTNode* node,Key key);
@@ -22,7 +24,7 @@ static BTNode* createBTNode(BTNode* parent)
         keynum set 0 and set parent
         all the keys set 0,all the value set NULL,all the child set NULL
     */
-    BTNode* node=malloc(sizeof(BTNode));
+    BTNode* node=(BTNode*)malloc(sizeof(BTNode));
     node->keynum=0;
     node->parent=parent;
     for(int i=0;i<=M;i++){
@@ -108,8 +110,8 @@ static eleType deleteValue(BTNode* node,int index)
     int endPos=node->keynum;
     eleType data=node->data[index];
     for(int i=index;i<endPos;i++){
-        node->keys[index]=node->keys[index+1];
-        node->data[index]=node->data[index+1];
+        node->keys[i]=node->keys[i+1];
+        node->data[i]=node->data[i+1];
     }
     node->keys[endPos]=0;
     node->data[endPos]=NULL;
@@ -414,31 +416,119 @@ void bTreeInitalize(BTree *tree)
         return;
     *tree=createBTNode(NULL);
 }
+void bTreeShow(BTree tree){
+    /*
+        show b-tree
 
-void bTreeTraversal(BTree tree, void (*traversal)(void *))
-{
+        traversal all the keys by levelorder
+    */
     if(tree==NULL)
         return;
+    //queue
+    linkQueue queue;
     BTNode* currNode=NULL;
-    linkStack stack;
-    linkStackInitalize(&stack);
-    linkStackPush(stack,tree);
+    linkQueueInitalize(&queue);
+    linkQueueEnqueue(queue,tree);
     int i=1;
-    while(!linkStackIsEmpty(stack)){
-        currNode=linkStackTop(stack);
-        linkStackPop(stack);
+    while(!linkQueueIsEmpty(queue)){
+        currNode=(BTNode*)linkQueueFront(queue);
+        //showBTree(currNode);
+        linkQueueDequeue(queue);
         if(currNode->child[0]!=NULL){
-            linkStackPush(stack,currNode->child[0]);
+            linkQueueEnqueue(queue,currNode->child[0]);
         }
         while(i<=currNode->keynum){
-            traversal(currNode->data[i]);
+            printf("%d",currNode->keys[i]);
+            if(i!=currNode->keynum)
+                printf(",");
+            else
+                printf(" ");
             if(currNode->child[i]!=NULL)
-                linkStackPush(stack,currNode->child[i]);
+                linkQueueEnqueue(queue,currNode->child[i]);
             i++;
         }
         i=1;
     }
-    linkStackFree(&stack);
+    printf("\n");
+    linkQueueFree(&queue);
+}
+//Traversal
+void bTreePreOrderTraversal(BTree tree, void (*traversal)(void *))
+{
+    if(tree==NULL)
+        return;
+    BTNode* currNode=tree;
+    for(int i=0;currNode&&i<=currNode->keynum;i++){
+        if(i+1<=currNode->keynum)
+            traversal(currNode->data[i+1]);
+        if(currNode->child[i]!=NULL)
+            bTreePreOrderTraversal(currNode->child[i],traversal);
+    }
+    if(currNode->parent==NULL)
+        printf("\n");
+}
+void bTreeInOrderTraversal(BTree tree, void (*traversal)(void *))
+{
+    if(tree==NULL)
+        return;
+    BTNode* currNode=tree;
+    for(int i=0;currNode&&i<=currNode->keynum;i++){
+        if(currNode->child[i]!=NULL)
+            bTreeInOrderTraversal(currNode->child[i],traversal);
+        if(i+1<=currNode->keynum)
+            traversal(currNode->data[i+1]);
+    }
+    if(currNode->parent==NULL)
+        printf("\n");
+}
+void bTreeLevelOrderTraversal(BTree tree, void (*traversal)(void *))
+{
+    if(tree==NULL)
+        return;
+    //queue
+    linkQueue queue;
+    BTNode* currNode=NULL;
+    linkQueueInitalize(&queue);
+    linkQueueEnqueue(queue,tree);
+    int i=1;
+    while(!linkQueueIsEmpty(queue)){
+        currNode=(BTNode*)linkQueueFront(queue);
+        linkQueueDequeue(queue);
+        if(currNode->child[0]!=NULL){
+            linkQueueEnqueue(queue,currNode->child[0]);
+        }
+        while(i<=currNode->keynum){
+            traversal(currNode->data[i]);
+            if(currNode->child[i]!=NULL)
+                linkQueueEnqueue(queue,currNode->child[i]);
+            i++;
+        }
+        i=1;
+    }
+    printf("\n");
+    linkQueueFree(&queue);
+    //stack
+    /*
+        linkStack stack;
+        linkStackInitalize(&stack);
+        linkStackPush(stack,*tree);
+        int i=1;
+        while(!linkStackIsEmpty(stack)){
+            currNode=(BTNode*)linkStackTop(stack);
+            linkStackPop(stack);
+            if(currNode->child[0]!=NULL){
+                linkStackPush(stack,currNode->child[0]);
+            }
+            while(i<=currNode->keynum){
+                traversal(currNode->data[i]);
+                if(currNode->child[i]!=NULL)
+                    linkStackPush(stack,currNode->child[i]);
+                i++;
+            }
+            i=1;
+        }
+        linkStackFree(&stack);
+    */
 }
 
 eleType bTreeSearch(BTree tree, Key key)
@@ -448,6 +538,8 @@ eleType bTreeSearch(BTree tree, Key key)
     */
     int i=1;
     BTNode* node=searchBTNode(tree,key);
+    if(node!=NULL)
+        i=searchIndex(node,key);
     return node!=NULL?node->data[i]:NULL;
 }
 
@@ -489,7 +581,7 @@ eleType bTreeDelete(BTree tree, Key key)
         delete data on b-tree by key
     */
     if(tree==NULL)
-        return false;
+        return NULL;
     int i=1;
     BTNode* parent=NULL;
     BTNode* currNode=tree;
@@ -546,24 +638,48 @@ void bTreeFree(BTree *tree)
     */
     if(tree==NULL&&*tree==NULL)
         return;
+    //queue
+    linkQueue queue;
     BTNode* currNode=NULL;
-    linkStack stack;
-    linkStackInitalize(&stack);
-    linkStackPush(stack,*tree);
+    linkQueueInitalize(&queue);
+    linkQueueEnqueue(queue,*tree);
     int i=1;
-    while(!linkStackIsEmpty(stack)){
-        currNode=linkStackTop(stack);
-        linkStackPop(stack);
+    while(!linkQueueIsEmpty(queue)){
+        currNode=(BTNode*)linkQueueFront(queue);
+        linkQueueDequeue(queue);
         if(currNode->child[0]!=NULL){
-            linkStackPush(stack,currNode->child[0]);
+            linkQueueEnqueue(queue,currNode->child[0]);
             while(i<=currNode->keynum){
                 if(currNode->child[i]!=NULL)
-                    linkStackPush(stack,currNode->child[i]);
+                    linkQueueEnqueue(queue,currNode->child[i]);
                 i++;
             }
         }
+
         free(currNode);
         i=1;
     }
-    linkStackFree(&stack);
+    linkQueueFree(&queue);
+    //stack
+    /*
+        linkStack stack;
+        linkStackInitalize(&stack);
+        linkStackPush(stack,*tree);
+        int i=1;
+        while(!linkStackIsEmpty(stack)){
+            currNode=(BTNode*)linkStackTop(stack);
+            linkStackPop(stack);
+            if(currNode->child[0]!=NULL){
+                linkStackPush(stack,currNode->child[0]);
+                while(i<=currNode->keynum){
+                    if(currNode->child[i]!=NULL)
+                        linkStackPush(stack,currNode->child[i]);
+                    i++;
+                }
+            }
+            free(currNode);
+            i=1;
+        }
+        linkStackFree(&stack);
+    */
 }
