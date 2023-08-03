@@ -1,4 +1,4 @@
-#include "linkStack.h"
+#include <simpleDS/linkStack.h>
 #include<stdlib.h>
 void linkStackInitalize(linkStack* ppStack){
     *ppStack=(linkStack)malloc(sizeof(struct linkStack));

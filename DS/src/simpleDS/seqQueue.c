@@ -1,5 +1,5 @@
+#include <simpleDS/seqQueue.h>
 #include<stdlib.h>
-#include "seqQueue.h"
 void seqQueueInitalize(seqQueue* ppQueue,int capacity){
     *ppQueue=(seqQueue)malloc(sizeof(struct seqQueue));
     (*ppQueue)->rear=0;

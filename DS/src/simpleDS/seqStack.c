@@ -1,5 +1,5 @@
+#include <simpleDS/seqStack.h>
 #include<stdlib.h>
-#include "seqStack.h"
 void seqStackInitalize(seqStack* ppStack,int capacity){
     *ppStack=(seqStack)malloc(sizeof(struct seqStack));
     (*ppStack)->bottom=(void**)malloc(sizeof(void*)*capacity);
