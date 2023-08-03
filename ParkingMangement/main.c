@@ -1,7 +1,7 @@
-#include "simpleMenu.h"
+#include <myTools/simpleMenu.h>
 #include "menuAction.h"
 #include "parkingLot.h"
-#include "debug.h"
+#include <myTools/debug.h>
 int main(){
     struct menuItem item[]={
         {SAME_LEVEL_MENU,"Parking Management",NULL,NULL,NULL},

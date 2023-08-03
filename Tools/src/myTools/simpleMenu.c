@@ -1,5 +1,5 @@
-#include "simpleMenu.h"
-#include "linkStack.h"
+#include <myTools/simpleMenu.h>
+#include <simpleDS/linkStack.h>
 void initalMenu(struct menuItem* menu,int size){
     struct menuItem* parentMenu=menu;
     struct menuItem* preMenu=NULL;

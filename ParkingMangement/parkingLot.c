@@ -1,6 +1,6 @@
 #include "parkingLot.h"
-#include "seqQueue.h"
-#include "seqStack.h"
+#include <simpleDS/seqQueue.h>
+#include <simpleDS/seqStack.h>
 static seqQueue sidewalk=NULL;
 static seqStack parkingLot=NULL;
 static int pos=1;
