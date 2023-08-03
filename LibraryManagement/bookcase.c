@@ -1,5 +1,5 @@
 #include "bookcase.h"
-#include "bTree.h"
+#include <myDS/bTree.h>
 #include <stdlib.h>
 #include <string.h>
 static BTree bookcase=NULL;

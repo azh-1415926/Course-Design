@@ -1,4 +1,4 @@
-#include "simpleMenu.h"
+#include <myTools/simpleMenu.h>
 #include "menuAction.h"
 #include "bookcase.h"
 int main(){
