@@ -1,7 +1,7 @@
-#include "bTree.h"
-#include "linkQueue.h"
+#include <myDS/bTree.h>
+#include <simpleDS/linkQueue.h>
 //#include "linkStack.h"
-#include<stdlib.h>
+#include <stdlib.h>
 //#include "debug.h"
 static BTNode* createBTNode(BTNode* parent);
 static int searchIndex(BTNode *node,Key key);
