@@ -1,8 +1,7 @@
 #include <myDS/bTree.h>
 #include <simpleDS/linkQueue.h>
-//#include "linkStack.h"
 #include <stdlib.h>
-//#include "debug.h"
+
 static BTNode* createBTNode(BTNode* parent);
 static int searchIndex(BTNode *node,Key key);
 static BTNode* searchBTNode(BTNode* node,Key key);
@@ -374,37 +373,6 @@ static void balanceBTNode(BTNode* parent,int index)
     }
 }
 
-//static BTNode* getPrecursor(BTNode* node)
-//{
-    // //if node not leaf,should have child
-    // if(node==NULL||node->parent!=NULL&&node->child[0]==NULL)
-    //     return NULL;
-    // BTNode* parent=node->parent;
-    // BTNode* target=NULL;
-    // if(parent!=NULL){
-    //     //leaf node
-    //     //node don't have child
-    //     int i=searchIndex(parent,node->keys[1]);
-    //     if(node->keys[1]<parent->keys[i])
-    //         i--;
-    //     if(i==0)
-    //         return node->child[0];
-    //     target=parent->child[i-1];
-    // }else{
-    //     //node have child
-    //     target=node->child[0];
-    //     //get the right node
-    //     while(target->child[target->keynum]!=NULL)
-    //         target=target->child[target->keynum];
-    // }
-    // return target;
-//}
-
-//static BTNode* getSuccessor(BTNode* node)
-//{
-    
-//}
-
 void bTreeInitalize(BTree *tree)
 {
     /*
@@ -416,6 +384,24 @@ void bTreeInitalize(BTree *tree)
         return;
     *tree=createBTNode(NULL);
 }
+
+void bTreeShowNode(BTNode* node)
+{
+    if(node==NULL)
+        return;
+    printf("[ * ] tree node %p\n",node);
+    printf("\tkeynum:%d\n\t",node->keynum);
+    for(int i=1;i<=M;i++){
+        printf("%d ",node->keys[i]);
+    }
+    printf("\n");
+    printf("\tparent:%p\n\t",node->parent);
+    for(int i=0;i<=M;i++){
+        printf("%p ",node->child[i]);
+    }
+    printf("\n");
+}
+
 void bTreeShow(BTree tree){
     /*
         show b-tree
@@ -452,7 +438,7 @@ void bTreeShow(BTree tree){
     printf("\n");
     linkQueueFree(&queue);
 }
-//Traversal
+
 void bTreePreOrderTraversal(BTree tree, void (*traversal)(void *))
 {
     if(tree==NULL)
@@ -467,6 +453,7 @@ void bTreePreOrderTraversal(BTree tree, void (*traversal)(void *))
     if(currNode->parent==NULL)
         printf("\n");
 }
+
 void bTreeInOrderTraversal(BTree tree, void (*traversal)(void *))
 {
     if(tree==NULL)
@@ -481,6 +468,7 @@ void bTreeInOrderTraversal(BTree tree, void (*traversal)(void *))
     if(currNode->parent==NULL)
         printf("\n");
 }
+
 void bTreeLevelOrderTraversal(BTree tree, void (*traversal)(void *))
 {
     if(tree==NULL)
@@ -507,28 +495,6 @@ void bTreeLevelOrderTraversal(BTree tree, void (*traversal)(void *))
     }
     printf("\n");
     linkQueueFree(&queue);
-    //stack
-    /*
-        linkStack stack;
-        linkStackInitalize(&stack);
-        linkStackPush(stack,*tree);
-        int i=1;
-        while(!linkStackIsEmpty(stack)){
-            currNode=(BTNode*)linkStackTop(stack);
-            linkStackPop(stack);
-            if(currNode->child[0]!=NULL){
-                linkStackPush(stack,currNode->child[0]);
-            }
-            while(i<=currNode->keynum){
-                traversal(currNode->data[i]);
-                if(currNode->child[i]!=NULL)
-                    linkStackPush(stack,currNode->child[i]);
-                i++;
-            }
-            i=1;
-        }
-        linkStackFree(&stack);
-    */
 }
 
 eleType bTreeSearch(BTree tree, Key key)
@@ -660,26 +626,4 @@ void bTreeFree(BTree *tree)
         i=1;
     }
     linkQueueFree(&queue);
-    //stack
-    /*
-        linkStack stack;
-        linkStackInitalize(&stack);
-        linkStackPush(stack,*tree);
-        int i=1;
-        while(!linkStackIsEmpty(stack)){
-            currNode=(BTNode*)linkStackTop(stack);
-            linkStackPop(stack);
-            if(currNode->child[0]!=NULL){
-                linkStackPush(stack,currNode->child[0]);
-                while(i<=currNode->keynum){
-                    if(currNode->child[i]!=NULL)
-                        linkStackPush(stack,currNode->child[i]);
-                    i++;
-                }
-            }
-            free(currNode);
-            i=1;
-        }
-        linkStackFree(&stack);
-    */
 }
